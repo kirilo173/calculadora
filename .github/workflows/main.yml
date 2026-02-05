@@ -1,25 +1,23 @@
+name: Docker Image CI
+
 on:
   push:
-    branches:  ["main"]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+
+  construir:
+
+    runs-on: ubuntu-24.04
+
     steps:
-      - name: Checkout repository
+      - name: Pull Repositorio
         uses: actions/checkout@v4
 
-      
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, pdo, pdo_mysql
-          coverage: none
-    
-      - name: Install dependencies
-        run:
-          composer install --no-progress --no-suggest --prefer-dist
-  
-      - name: Run tests
-        run: vendor/bin/phpunit --testdox tests
+      - name: Build the Docker image
+        run: docker build -t esteban/calculadora:$(date +%s) .
+
+      - name: Login Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
