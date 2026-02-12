@@ -20,7 +20,7 @@ jobs:
         run: docker build -t kiriloo/calculadora:$(date +%s) .
 
       - name: Login Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: docker login -u ${{secrets.DOCKER_HUB_USER}} -p ${{secrets.DOCKER_HUB_TOKEN}}
 
       - name: Subir imagen Docker Hub
-        run: docker push ${{ secrets.DOCKER_HUB_USER }}/calculadora:latest 
+        run: docker push ${{secrets.DOCKER_HUB_USER}}/calculadora:latest 
